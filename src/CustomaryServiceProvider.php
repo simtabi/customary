@@ -18,7 +18,7 @@ class CustomaryServiceProvider extends ServiceProvider
         // Load migration
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-        $this->mergeConfigFrom(__DIR__.'/../config/settings.php', 'customary');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'customary');
 
         if ($this->app->runningInConsole())
         {
@@ -27,7 +27,7 @@ class CustomaryServiceProvider extends ServiceProvider
             ], 'customary:migrations');
 
             $this->publishes([
-                __DIR__.'/../config/settings.php' => config_path('customary.php'),
+                __DIR__.'/../config/config.php' => config_path('customary.php'),
             ], 'customary:config');
         }
 
