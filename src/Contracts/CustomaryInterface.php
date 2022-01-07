@@ -63,4 +63,14 @@ interface CustomaryInterface
      * @return $this
      */
     public function group($groupName);
+
+    /**
+     * Fetch a key's value based on the given group and owners id
+     *
+     * @param $key
+     * @param $ownersId
+     * @param $group
+     * @return mixed
+     */
+    public function keyValueByOwnersId($key, $ownersId, $group);
 }

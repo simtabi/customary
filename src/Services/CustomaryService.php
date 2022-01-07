@@ -141,7 +141,15 @@ class CustomaryService implements Contract
         $this->groupName = $groupName;
         return $this;
     }
-    
+
+    /**
+     * Fetch a key's value based on the given group and owners id
+     *
+     * @param $key
+     * @param $ownersId
+     * @param $group
+     * @return mixed
+     */
     public function keyValueByOwnersId($key, $ownersId, $group)
     {
         return $this->getCustomaryModel()->KeyValueByOwnersId($key, $ownersId, $group);
