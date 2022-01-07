@@ -1,0 +1,58 @@
+{
+  "name": "simtabi/customary",
+  "description": "Laravel package to store key value pair settings in the database.",
+  "homepage": "https://github.com/simtabi/customary",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "simtabi",
+    "laravel",
+    "database settings",
+    "db settings",
+    "eloquent"
+  ],
+  "authors": [
+    {
+      "name": "Imani Manyara",
+      "email": "hello@imanimanyara.com",
+      "homepage": "https://www.imanimanyara.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=8.0",
+    "laravel/framework": ">=8.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "3.8.*|4.*|5.*",
+    "mockery/mockery": "^0.9.4 || ~1.0",
+    "phpunit/phpunit": "^8.5"
+  },
+  "autoload": {
+    "classmap": [
+      "database/migrations"
+    ],
+    "psr-4": {
+      "Simtabi\\Customary\\": "src/"
+    },
+    "files": [
+      "helpers/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {}
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "CustomaryServiceProvider"
+      ],
+      "aliases": {
+        "Customary": "CustomaryFacade"
+      }
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  }
+}
