@@ -15,16 +15,16 @@ if (! function_exists('customary')) {
      */
     function customary($key = null, $default = null): mixed
     {
-        $setting = app()->make(CustomaryInterface::class);
+        $customary = app()->make(CustomaryInterface::class);
 
         if (is_null($key)) {
-            return $setting;
+            return $customary;
         }
 
         if (is_array($key)) {
-            return $setting->set($key);
+            return $customary->set($key);
         }
 
-        return $setting->get($key, value($default));
+        return $customary->get($key, value($default));
     }
 }
