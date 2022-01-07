@@ -28,9 +28,9 @@ class Customary extends Model
         return $query->whereGroup($groupName);
     }
     
-    public function scopeGetTaskStatus($query, $task, $ownerableId, $group)
+    public function scopeGetKeyValueByOwnersId($query, $key, $ownersId, $group)
     {
-        $query = $query->where('ownerable_id', $ownerableId)->where('group', $group)->where('key', $task)->get()->first();
+        $query = $query->where('ownerable_id', $ownersId)->where('group', $group)->where('key', $key)->get()->first();
 
         return $query->value;
     }

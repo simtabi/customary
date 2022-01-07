@@ -142,8 +142,8 @@ class CustomaryService implements Contract
         return $this;
     }
     
-    public function getKeyValueByOwnersId($task, $ownersId, $group)
+    public function getKeyValueByOwnersId($key, $ownersId, $group)
     {
-        return $this->getCustomaryModel()->getTaskStatus($task, $ownersId, $group);
+        return $this->getCustomaryModel()->getTaskStatus($key, $ownersId, $group);
     }
 }
