@@ -45,10 +45,10 @@
   "extra": {
     "laravel": {
       "providers": [
-        "CustomaryServiceProvider"
+        "Simtabi\\Customary\\CustomaryServiceProvider"
       ],
       "aliases": {
-        "Customary": "CustomaryFacade"
+        "Customary": "Simtabi\\Customary\\Facades\\CustomaryFacade"
       }
     }
   },

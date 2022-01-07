@@ -14,14 +14,14 @@ class CustomaryService implements Contract
      *
      * @var string
      */
-    protected $settingsGroupName = 'default';
+    protected $groupName = 'default';
 
     /**
      * Cache key.
      *
      * @var string
      */
-    protected $settingsCacheKey = 'customary_options';
+    protected $cacheKey  = 'customary_options';
 
     /**
      * {@inheritdoc}
@@ -32,17 +32,9 @@ class CustomaryService implements Contract
             return $this->modelQuery()->pluck('value', 'key');
         }
 
-        return Cache::rememberForever($this->getSettingsCacheKey(), function () {
+        return Cache::rememberForever($this->getCacheKey(), function () {
             return $this->modelQuery()->pluck('value', 'key');
         });
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function get($key, $default = null, $fresh = false)
-    {
-        return $this->all($fresh)->get($key, $default);
     }
 
     /**
@@ -55,22 +47,29 @@ class CustomaryService implements Contract
             foreach ($key as $name => $item) {
                 $this->set($name, $item);
             }
-
             return true;
         }
 
         $setting = $this->getSettingModel()->firstOrNew([
             'key'   => $key,
-            'group' => $this->settingsGroupName,
+            'group' => $this->groupName,
         ]);
 
         $setting->value = $value;
-        $setting->group = $this->settingsGroupName;
+        $setting->group = $this->groupName;
         $setting->save();
 
         $this->flushCache();
 
         return $value;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get($key, $default = null, $fresh = false)
+    {
+        return $this->all($fresh)->get($key, $default);
     }
 
     /**
@@ -98,7 +97,7 @@ class CustomaryService implements Contract
      */
     public function flushCache()
     {
-        return Cache::forget($this->getSettingsCacheKey());
+        return Cache::forget($this->getCacheKey());
     }
 
     /**
@@ -106,9 +105,9 @@ class CustomaryService implements Contract
      *
      * @return string
      */
-    protected function getSettingsCacheKey()
+    protected function getCacheKey()
     {
-        return $this->settingsCacheKey.'.'.$this->settingsGroupName;
+        return $this->cacheKey.'.'.$this->groupName;
     }
 
     /**
@@ -128,7 +127,7 @@ class CustomaryService implements Contract
      */
     protected function modelQuery()
     {
-        return $this->getSettingModel()->group($this->settingsGroupName);
+        return $this->getSettingModel()->group($this->groupName);
     }
 
     /**
@@ -139,8 +138,7 @@ class CustomaryService implements Contract
      */
     public function group($groupName)
     {
-        $this->settingsGroupName = $groupName;
-
+        $this->groupName = $groupName;
         return $this;
     }
 }
