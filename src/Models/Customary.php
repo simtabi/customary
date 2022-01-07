@@ -28,7 +28,7 @@ class Customary extends Model
         return $query->whereGroup($groupName);
     }
     
-    public function scopeGetKeyValueByOwnersId($query, $key, $ownersId, $group)
+    public function scopeKeyValueByOwnersId($query, $key, $ownersId, $group)
     {
         $query = $query->where('ownerable_id', $ownersId)->where('group', $group)->where('key', $key)->get()->first();
 
