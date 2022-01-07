@@ -9,7 +9,7 @@ class Customary extends Model
 {
     use HasUuid;
 
-    protected $guarded = ['updated_at', 'id'];
+    protected $guarded  = ['updated_at', 'id'];
 
     protected $fillable = [
         'id',
@@ -26,6 +26,13 @@ class Customary extends Model
     public function scopeGroup($query, $groupName)
     {
         return $query->whereGroup($groupName);
+    }
+    
+    public function scopeGetTaskStatus($query, $task, $ownerableId, $group)
+    {
+        $query = $query->where('ownerable_id', $ownerableId)->where('group', $group)->where('key', $task)->get()->first();
+
+        return $query->value;
     }
 
     /**
