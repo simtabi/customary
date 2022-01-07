@@ -42,7 +42,7 @@ class CustomaryService implements Contract
      */
     public function set($key, $value = null)
     {
-        // if it's an array, batch save settings
+        // if it's an array, batch save customary
         if (is_array($key)) {
             foreach ($key as $name => $item) {
                 $this->set($name, $item);
@@ -50,9 +50,9 @@ class CustomaryService implements Contract
             return true;
         }
 
-        $setting = $this->getSettingModel()->firstOrNew([
-            'key'   => $key,
+        $setting = $this->getCustomaryModel()->firstOrNew([
             'group' => $this->groupName,
+            'key'   => $key,
         ]);
 
         $setting->value = $value;
@@ -85,7 +85,7 @@ class CustomaryService implements Contract
      */
     public function remove($key)
     {
-        $deleted = $this->getSettingModel()->where('key', $key)->delete();
+        $deleted = $this->getCustomaryModel()->where('key', $key)->delete();
 
         $this->flushCache();
 
@@ -101,7 +101,7 @@ class CustomaryService implements Contract
     }
 
     /**
-     * Get settings cache key.
+     * Get customary cache key.
      *
      * @return string
      */
@@ -111,11 +111,11 @@ class CustomaryService implements Contract
     }
 
     /**
-     * Get settings eloquent model.
+     * Get customary eloquent model.
      *
      * @return Builder
      */
-    protected function getSettingModel()
+    protected function getCustomaryModel()
     {
         return app(Customary::class);
     }
@@ -127,11 +127,11 @@ class CustomaryService implements Contract
      */
     protected function modelQuery()
     {
-        return $this->getSettingModel()->group($this->groupName);
+        return $this->getCustomaryModel()->group($this->groupName);
     }
 
     /**
-     * Set the group name for settings.
+     * Set the group name for customary.
      *
      * @param  string  $groupName
      * @return $this
