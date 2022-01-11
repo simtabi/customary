@@ -18,8 +18,10 @@ class CreateCustomaryOptionsTable extends Migration
                 $table->uuid('id')->primary()->index()->unique();
                 $table->uuidMorphs('ownerable');
                 $table->string('group')->default('default');
+                $table->string('sub_group')->default('default');
                 $table->string('key');
                 $table->text('value')->nullable();
+                $table->text('description')->nullable();
                 $table->string('locale')->nullable()->index();
                 $table->unique(['key', 'locale']);
                 $table->timestamps();

@@ -16,8 +16,10 @@ class Customary extends Model
         'ownerable_type',
         'ownerable_id',
         'group',
+        'sub_group',
         'key',
         'value',
+        'description',
         'locale',
     ];
 
