@@ -156,28 +156,56 @@ class CustomaryService implements Contract
         return $this->getCustomaryModel()->KeyValueByOwnersId($key, $ownersId, $group);
     }
 
-    public function addThroughModel(Model $model, array $data, string $group, string $method)
+    public function createThroughModel(Model $model, array $data, string $group, string $method): bool
     {
         $status = false;
         $passed = [];
 
-        if (method_exists($model, $method)) {
+        if (method_exists($model, $method))
+        {
+            $model->refresh();
             foreach ($data as $key => $value)
             {
                 // create only if unique
                 $unique = $model->$method()->where('key', $key)->where('group', $group)->get();
                 if ($unique->isEmpty()) {
                     $query = new Customary([
-                        'id'    => pheg()->uuid()->generate(),
                         'group' => $group,
                         'key'   => $key,
                         'value' => $value,
                     ]);
 
-                    if ($model->$method()->save($query)) {
+                    if ($model->$method()->save($query))
+                    {
                         $passed[] = $key;
                         $status   = true;
                     }
+                }
+            }
+        }
+
+        return $status && (count($passed) == count($data));
+    }
+
+    public function updateThroughModel(Model $model, array $data, string $group, string $method): bool
+    {
+
+        $status = false;
+        $passed = [];
+
+        if (method_exists($model, $method))
+        {
+            $model->refresh();
+            foreach ($data as $key => $value)
+            {
+                $query = $model->$method()->where('key', $key)->where('group', $group)->update([
+                    'value' => $value
+                ]);
+
+                if ($query)
+                {
+                    $passed[] = $key;
+                    $status   = true;
                 }
             }
         }
