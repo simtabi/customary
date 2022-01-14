@@ -164,15 +164,17 @@ class CustomaryService implements Contract
         if (method_exists($model, $method))
         {
             $model->refresh();
-            foreach ($data as $key => $value)
+            foreach ($data as $key => $datum)
             {
                 // create only if unique
                 $unique = $model->$method()->where('key', $key)->where('group', $group)->get();
                 if ($unique->isEmpty()) {
                     $query = new Customary([
-                        'group' => $group,
-                        'key'   => $key,
-                        'value' => $value,
+                        'group'       => $group,
+                        'sub_group'   => $datum['sub_group']   ?? null,
+                        'key'         => $key,
+                        'value'       => $datum['value']       ?? null,
+                        'description' => $datum['description'] ?? null,
                     ]);
 
                     if ($model->$method()->save($query))
@@ -196,11 +198,22 @@ class CustomaryService implements Contract
         if (method_exists($model, $method))
         {
             $model->refresh();
-            foreach ($data as $key => $value)
+            foreach ($data as $key => $datum)
             {
-                $query = $model->$method()->where('key', $key)->where('group', $group)->update([
-                    'value' => $value
-                ]);
+                $subGroup       = $datum['sub_group']   ?? null;
+                $description    = $datum['description'] ?? null;
+                $ready['value'] = $datum['value']       ?? null;
+                if (!empty($subGroup)) {
+                    $ready['sub_group'] = $subGroup;
+                }
+                if (!empty($description)) {
+                    $ready['description'] = $description;
+                }
+
+                $query = $model->$method()->where('key', $key)->where('group', $group)->update(array_merge([
+                    'group'       => $group,
+                    'key'         => $key,
+                ], $ready));
 
                 if ($query)
                 {
