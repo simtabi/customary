@@ -3,6 +3,7 @@
 namespace Simtabi\Customary\Services;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Simtabi\Customary\Contracts\CustomaryInterface as Contract;
 use Simtabi\Customary\Models\Customary;
@@ -153,5 +154,34 @@ class CustomaryService implements Contract
     public function keyValueByOwnersId($key, $ownersId, $group)
     {
         return $this->getCustomaryModel()->KeyValueByOwnersId($key, $ownersId, $group);
+    }
+
+    public function addThroughModel(Model $model, array $data, string $group, string $method)
+    {
+        $status = false;
+        $passed = [];
+
+        if (method_exists($model, $method)) {
+            foreach ($data as $key => $value)
+            {
+                // create only if unique
+                $unique = $model->$method()->where('key', $key)->where('group', $group)->get();
+                if ($unique->isEmpty()) {
+                    $query = new Customary([
+                        'id'    => pheg()->uuid()->generate(),
+                        'group' => $group,
+                        'key'   => $key,
+                        'value' => $value,
+                    ]);
+
+                    if ($model->$method()->save($query)) {
+                        $passed[] = $key;
+                        $status   = true;
+                    }
+                }
+            }
+        }
+
+        return $status && (count($passed) == count($data));
     }
 }
