@@ -16,12 +16,13 @@ class CreateCustomaryOptionsTable extends Migration
         if (!Schema::hasTable('customary_options')) {
             Schema::create('customary_options', function (Blueprint $table) {
                 $table->uuid('id')->primary()->index()->unique();
-                $table->uuidMorphs('ownerable');
                 $table->string('group')->default('default');
                 $table->string('sub_group')->nullable()->default('default');
                 $table->string('key');
                 $table->text('value')->nullable();
                 $table->text('description')->nullable();
+                $table->integer('order')->default(0);
+                $table->uuidMorphs('ownerable');
                 $table->string('locale')->nullable()->index();
                 $table->unique(['key', 'locale']);
                 $table->timestamps();
