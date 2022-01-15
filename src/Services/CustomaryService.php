@@ -204,12 +204,15 @@ class CustomaryService implements Contract
                 $subGroup       = $datum['sub_group']   ?? null;
                 $description    = $datum['description'] ?? null;
                 $ready['value'] = $datum['value']       ?? null;
-                $ready['order'] = (int) $datum['order'] ?? 0;
+
                 if (!empty($subGroup)) {
                     $ready['sub_group'] = $subGroup;
                 }
                 if (!empty($description)) {
                     $ready['description'] = $description;
+                }
+                if (isset($datum['order'])) {
+                    $ready['order'] = (int) $datum['order'] ?? 0;
                 }
 
                 $query = $model->$method()->where('key', $key)->where('group', $group)->update(array_merge([
