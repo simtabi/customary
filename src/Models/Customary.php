@@ -13,13 +13,14 @@ class Customary extends Model
 
     protected $fillable = [
         'id',
-        'ownerable_type',
-        'ownerable_id',
         'group',
         'sub_group',
         'key',
         'value',
         'description',
+        'order',
+        'ownerable_type',
+        'ownerable_id',
         'locale',
     ];
 

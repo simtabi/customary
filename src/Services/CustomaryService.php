@@ -174,6 +174,7 @@ class CustomaryService implements Contract
                         'sub_group'   => $datum['sub_group']   ?? null,
                         'key'         => $key,
                         'value'       => $datum['value']       ?? null,
+                        'order'       => (int) $datum['order'] ?? 0,
                         'description' => $datum['description'] ?? null,
                     ]);
 
@@ -203,6 +204,7 @@ class CustomaryService implements Contract
                 $subGroup       = $datum['sub_group']   ?? null;
                 $description    = $datum['description'] ?? null;
                 $ready['value'] = $datum['value']       ?? null;
+                $ready['order'] = (int) $datum['order'] ?? 0;
                 if (!empty($subGroup)) {
                     $ready['sub_group'] = $subGroup;
                 }
