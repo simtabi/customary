@@ -3,11 +3,11 @@
 namespace Simtabi\Customary\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Simtabi\Laranail\Supports\Model\Traits\UUID\WithUuid;
+use Simtabi\Laranail\Supports\Model\Traits\UUID\HasUuid;
 
 class Customary extends Model
 {
-    use WithUuid;
+    use HasUuid;
 
     protected $guarded  = ['updated_at', 'id'];
 
