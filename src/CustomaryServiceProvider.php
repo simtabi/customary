@@ -22,7 +22,7 @@ class CustomaryServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(self::PACKAGE_PATH . "resources/lang/", $this->packageName);
         $this->loadMigrationsFrom(self::PACKAGE_PATH.'/../database/migrations');
         $this->loadViewsFrom(self::PACKAGE_PATH . "resources/views", $this->packageName);
-        $this->mergeConfigFrom(self::PACKAGE_PATH . "config/{$this->packageName}.php", $this->packageName);
+        $this->mergeConfigFrom(self::PACKAGE_PATH . "config/config.php", $this->packageName);
 
         $this->app->bind(CustomaryInterface::class, CustomaryService::class);
     }
@@ -44,7 +44,7 @@ class CustomaryServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole())
         {
             $this->publishes([
-                self::PACKAGE_PATH . "config/{$this->packageName}.php" => config_path("{$this->packageName}.php"),
+                self::PACKAGE_PATH . "config/config.php"               => config_path("{$this->packageName}.php"),
             ], "{$this->packageName}:config");
 
             $this->publishes([
